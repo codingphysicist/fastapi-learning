@@ -21,3 +21,12 @@ async def get_book(book_title:str):
     for book in BOOKS:
         if book.get("title").casefold()==book_title.casefold():
             return book
+        
+@app.get("/books/")
+async def read_category_by_query(category:str):
+    books_to_return=[]
+    for book in BOOKS:
+        if book.get("category").casefold() == category.casefold():
+            books_to_return.append(book)
+    return books_to_return
+
