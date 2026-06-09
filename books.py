@@ -50,3 +50,12 @@ async def read_author_category_by_querry(book_author:str,category:str):
 @app.post("/books/create_book")
 async def create_book(new_book=Body()):
     BOOKS.append(new_book)
+
+#PUT request
+@app.put("/books/update_books")
+async def update_book(updated_book=Body()):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].get("title").casefold()==updated_book.get("title").casefold():
+            BOOKS[i]=updated_book
+
+#{"title": "Title Six", "author: "Author Four", "category": "english"}
