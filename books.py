@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import Body, FastAPI, HTTPException
 app= FastAPI()
 
 
@@ -12,16 +12,21 @@ BOOKS = [
 {'title': 'Title Six', 'author': 'Author Two', 'category': 'math'}
 ]
 
+#api
 @app.get('/books')
 async def read_all_books() -> list:
     return BOOKS
 
+#path paramete
 @app.get("/books/{book_title}")
 async def get_book(book_title:str):
     for book in BOOKS:
         if book.get("title").casefold()==book_title.casefold():
             return book
-        
+    raise HTTPException(status_code=404, detail=f"Book '{book_title}' not found")
+
+
+#query parameter 
 @app.get("/books/")
 async def read_category_by_query(category:str):
     books_to_return=[]
@@ -31,6 +36,7 @@ async def read_category_by_query(category:str):
     return books_to_return
 
 
+#both path and query parameter
 @app.get("/books/{book_author}/")
 async def read_author_category_by_querry(book_author:str,category:str):
     books_to_return=[]
@@ -38,3 +44,9 @@ async def read_author_category_by_querry(book_author:str,category:str):
         if book.get('author').casefold()==book_author.casefold() and book.get("category").casefold()==category.casefold():
             books_to_return.append(book)
     return books_to_return
+
+
+#post request (import body)
+@app.post("/books/create_book")
+async def create_book(new_book=Body()):
+    BOOKS.append(new_book)
