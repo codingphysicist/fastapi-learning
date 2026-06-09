@@ -27,7 +27,7 @@ async def get_book(book_title:str):
 
 
 #query parameter 
-@app.get("/books/")
+@app.get("/books/category")
 async def read_category_by_query(category:str):
     books_to_return=[]
     for book in BOOKS:
@@ -59,3 +59,13 @@ async def update_book(updated_book=Body()):
             BOOKS[i]=updated_book
 
 #{"title": "Title Six", "author: "Author Four", "category": "english"}
+
+
+#delete request 
+@app.delete("/books/delete_book/{book_title}")
+async def delete_book(book_title):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].get("title").casefold()==book_title.casefold():
+            BOOKS.pop(i)
+            break
+        
