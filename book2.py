@@ -6,7 +6,7 @@ app= FastAPI()
 
 
 class Book:
-    id: Optional[int]=None
+    id: int
     title:str
     author:str
     description:str
@@ -20,12 +20,23 @@ class Book:
         self.rating = rating
 
 class BookRequest(BaseModel):
-    id:int
+    id: Optional[int]=Field(description="Do not need an ID", default=None)
     title:str = Field(min_length=3 )
     author:str = Field(min_length=1 )
     description:str = Field(min_length=1, max_length=100 )
     rating:int = Field(gt=-1,lt=6 )
 
+
+    model_config={
+        "json_schema_extra":{
+            "example":{
+                "title":"Mathematics",
+                "author":"RD Sharma",
+                "description":"Deep understanding for advanced mathematics",
+                "rating":4
+            }
+        }
+    }
 
 BOOKS=[
     Book(1, "Python Crash Course", "Eric Matthes", "A beginner-friendly introduction to Python programming.", 4),
