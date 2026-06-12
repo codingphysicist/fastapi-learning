@@ -89,7 +89,6 @@ async def update_book(book:BookRequest):
 
 
 
-
 @app.get("/books/publish")
 async def book_by_published_date(published_date:int):
     books_to_return=[]
