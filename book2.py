@@ -87,12 +87,8 @@ async def update_book(book:BookRequest):
         if book.id==BOOKS[i].id:
             BOOKS[i]=book 
 
-@app.delete("/books/delete_book")
-async def delete_book(book_id:int):
-    for i in range(len(BOOKS)):
-        if BOOKS[i].id==book_id:
-            BOOKS.pop(i)
-            break
+
+
 
 @app.get("/books/publish")
 async def book_by_published_date(published_date:int):
@@ -101,3 +97,11 @@ async def book_by_published_date(published_date:int):
         if book.published_date==published_date:
             books_to_return.append(book)
     return books_to_return
+
+
+@app.delete("/books/delete_book")
+async def delete_book(book_id:int):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id==book_id:
+            BOOKS.pop(i)
+            break

@@ -35,6 +35,11 @@ async def read_category_by_query(category:str):
             books_to_return.append(book)
     return books_to_return
 
+#post request (import body)
+@app.post("/books/create_book")
+async def create_book(new_book=Body()):
+    BOOKS.append(new_book)
+
 
 #both path and query parameter
 @app.get("/books/{book_author}/")
@@ -46,10 +51,6 @@ async def read_author_category_by_querry(book_author:str,category:str):
     return books_to_return
 
 
-#post request (import body)
-@app.post("/books/create_book")
-async def create_book(new_book=Body()):
-    BOOKS.append(new_book)
 
 #PUT request
 @app.put("/books/update_books")
